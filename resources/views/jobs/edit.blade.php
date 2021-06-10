@@ -15,9 +15,9 @@
                 <div class="card-header">Add New Job</div>
                 <div class="card-body">
 
-                    <form action="{{route('jobs.store')}}" method="POST">
+                    <form action="{{route('job.update',[$jobs->id])}}" method="POST">
                         @csrf
-                    <div class="form-group">
+                    <div class="form-group">,
                         <label for="title">Title:</label>
                         <input type="text" name="title" class="form-control
                         @error('title') is-invalid @enderror" value="{{$jobs->title}}">
@@ -53,7 +53,7 @@
                         <label for="category">Category</label>
                         <select name="category" class="form-control">
                             @foreach (App\Models\Category::all() as $cat)
-                                <option value="{{$cat->id}}">{{$cat->name}}</option>
+                                <option value="{{$cat->id}}"{{$cat->id==$jobs->category_id?'selected':''}}>{{$cat->name}}</option>
                             @endforeach
                         </select>
                     </div>

@@ -19,6 +19,7 @@ use App\Http\Controllers\EmployerRegisterController;
 
 Route::get('/', [JobController::class, 'index'])->name('home');
 Route::get('jobs/edit/{id}',[JobController::class,'edit'])->name('job.edit');
+Route::post('jobs/edit/{id}',[JobController::class,'update'])->name('job.update');
 Route::get('/jobs/{id}/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/company/{id}/{company}', [CompanyController::class, 'index'])->name('company.index');
 
