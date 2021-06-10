@@ -16,7 +16,7 @@ class CreateJobUserTable extends Migration
         Schema::create('job_user', function (Blueprint $table) {
             $table->id();
             $table->integer('job_id');
-            $table->integer('phone');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

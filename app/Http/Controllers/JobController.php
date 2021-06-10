@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Company;
 use App\Http\Requests\JobPostRequest;
+use Illuminate\Support\Facades\Auth;
 
 class JobController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('employer',['except'=>array('index','show','apply')]);
+    }
+
     //
     public function index(){
         $jobs = Job::all()/* ->take(10) */;
@@ -60,5 +66,11 @@ class JobController extends Controller
        $jobs = Job::findOrFail($id);
        $jobs->update($request->all());
        return redirect()->back()->with('message','Jobs Sucessfully Updated');
+    }
+
+    public function apply(Request $request,$id){
+        $jobId =Job::find($id);
+        $jobId->users()->attach(Auth::user()->id);
+        return redirect()->back()->with('message','Application Sent!!');
     }
 }

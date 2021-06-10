@@ -23,6 +23,9 @@ Route::post('jobs/edit/{id}',[JobController::class,'update'])->name('job.update'
 Route::get('/jobs/{id}/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/company/{id}/{company}', [CompanyController::class, 'index'])->name('company.index');
 
+//apply
+Route::post('/applications/{id}',[JobController::class,'apply'])->name('apply');
+
 //user Profile
 Route::get('user/profile',[UserprofileController::class,'index'])->name('profile.view');
 Route::post('user/profile/create',[UserprofileController::class,'store'])->name('profile.create');
