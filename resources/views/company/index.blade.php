@@ -4,18 +4,18 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
       <div class="company-profile">
-          @if (empty(Auth::user()->company->cover_photo))
+          @if (empty($company->cover_photo))
             <img src={{ asset('cover/mycom.jpg') }} style="width: 100%;">
             @else
-            <img src="{{asset('upload/coverphoto')}}/{{Auth::user()->company->cover_photo}}" style="width: 100%">
+            <img src="{{asset('upload/coverphoto')}}/{{$company->cover_photo}}" style="width: 100%">
           @endif
 
           <div class="company-desc">
 
-            @if (empty(Auth::user()->company->logo))
+            @if (empty($company->logo))
             <img src={{ asset('avatar/avatar6.png ')}} style="width: 100px;">
             @else
-            <img src="{{asset('upload/logo')}}/{{Auth::user()->company->logo}}" style="width:10%">
+            <img src="{{asset('upload/logo')}}/{{$company->logo}}" style="width:10%">
             @endif
 
             <p>{{$company->description}}</p>

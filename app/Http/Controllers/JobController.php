@@ -12,13 +12,14 @@ class JobController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('employer',['except'=>array('index','show','apply')]);
+        $this->middleware('employer',['except'=>array('index','show','apply','alljobs')]);
     }
 
     //
     public function index(){
-        $jobs = Job::all()/* ->take(10) */;
-        return view('welcome',compact('jobs'));
+        $jobs = Job::latest()->limit(10)->where('status',1)->get();
+        $companies = Company::limit(8)->get();
+        return view('welcome',compact('jobs','companies'));
     }
 
     public function show($id,Job $job){
@@ -39,7 +40,7 @@ class JobController extends Controller
             'company_id'=> $company_id,
             'title'=>request('title'),
             'slug'=>str_slug(request('title')),
-            'description'=>request('title'),
+            'description'=>request('description'),
             'roles'=>request('roles'),
             'category_id'=>request('category'),
             'position'=>request('position'),
@@ -72,5 +73,35 @@ class JobController extends Controller
         $jobId =Job::find($id);
         $jobId->users()->attach(Auth::user()->id);
         return redirect()->back()->with('message','Application Sent!!');
+    }
+
+    public function applicant(){
+        $applicants = Job::has('users')->where('user_id',auth()->user()->id)->get();
+        return view('jobs.applicants',compact('applicants'));
+    }
+
+    public function allJobs(Request $request){
+
+        $keyword = $request->get('title');
+        $type = $request->get('type');
+        $category = $request->get('category_id');
+        $address = $request->get('address');
+
+        /* if($keyword||$type||$category||$address){ */
+            $jobs = Job::where('title','LIKE','%'.$keyword.'%')
+            ->orwhere('type',$type)
+            ->orwhere('category_id',$category)
+            ->orwhere('address',$address)->paginate(1);
+            return view('jobs.alljobs',compact('jobs'));
+        /* } */
+
+       /*  else{
+            $jobs = Job::paginate(1);
+            return view('jobs.alljobs',compact('jobs'));
+        } */
+
+
+
+
     }
 }

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">My Jobs</div>
 
                 <div class="card-body">
                     <table class="table">
@@ -36,11 +36,14 @@
                                 <td><i class="fa fa-globe"></i> &nbsp Date:{{$job->created_at->diffForHumans()}}</td>
                                 <td>
                                     <a href="{{route('jobs.show',[$job->id,$job->slug])}}">
-                                    <button class="btn btn-success btn-sm">Apply</button>
+                                    <button class="btn btn-success btn-sm">Read</button>
                                     </a>
+
+                                </td>
+                                <td>
                                     <a href="{{route('job.edit',[$job->id])}}">
-                                    <button class="btn btn-dark btn-sm">Edit</button>
-                                    </a>
+                                        <button class="btn btn-dark btn-sm">Edit</button>
+                                        </a>
                                 </td>
                             </tr>
                             @endforeach

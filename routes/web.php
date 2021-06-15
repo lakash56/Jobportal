@@ -25,6 +25,8 @@ Route::get('/company/{id}/{company}', [CompanyController::class, 'index'])->name
 
 //apply
 Route::post('/applications/{id}',[JobController::class,'apply'])->name('apply');
+Route::get('/jobs/application',[JobController::class,'applicant']);
+
 
 //user Profile
 Route::get('user/profile',[UserprofileController::class,'index'])->name('profile.view');
@@ -45,6 +47,7 @@ Route::post('company/logo',[CompanyController::class,'companylogo'])->name('comp
 Route::get('jobs/create',[JobController::class,'create'])->name('jobs.create');
 Route::post('jobs/create',[JobController::class,'store'])->name('jobs.store');
 Route::get('jobs/my-job',[JobController::class,'myjob'])->name('myjob');
+Route::get('jobs/viewalljobs',[JobController::class,'alljobs'])->name('viewalljobs');
 
 
 
