@@ -38,7 +38,7 @@
     </div>
 
         <div>
-           <a href="{{route('viewalljobs')}}"> <button class="btn btn-success btn-lg" style="width:100%">Browse All Jobs</button></a>
+           <a href="{{ route('all.jobs') }}" class="btn btn-success btn-block">Browse All Jobs</a>
         </div>
         <hr>
         <h1>Fetured Companies</h1>

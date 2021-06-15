@@ -5,6 +5,10 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserprofileController;
 use App\Http\Controllers\EmployerRegisterController;
+use App\Http\Controllers\HomeController;
+use App\Models\Category;
+use App\Models\Job;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +50,9 @@ Route::post('company/logo',[CompanyController::class,'companylogo'])->name('comp
 /* Jobs Routs */
 Route::get('jobs/create',[JobController::class,'create'])->name('jobs.create');
 Route::post('jobs/create',[JobController::class,'store'])->name('jobs.store');
-Route::get('jobs/my-job',[JobController::class,'myjob'])->name('myjob');
-Route::get('jobs/viewalljobs',[JobController::class,'alljobs'])->name('viewalljobs');
+Route::get('all-jobs',[JobController::class ,'listAllJobs'])->name('all.jobs');
+
+Route::post('search-jobs',[JobController::class,'search'])->name('search.job.options');
 
 
 
@@ -56,4 +61,4 @@ Route::get('jobs/viewalljobs',[JobController::class,'alljobs'])->name('viewalljo
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
