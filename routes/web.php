@@ -5,6 +5,8 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserprofileController;
 use App\Http\Controllers\EmployerRegisterController;
+use App\Http\Controllers\FavouriteController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,7 @@ Route::get('/company/{id}/{company}', [CompanyController::class, 'index'])->name
 
 //apply
 Route::post('/applications/{id}',[JobController::class,'apply'])->name('apply');
-Route::get('/jobs/application',[JobController::class,'applicant']);
+Route::get('/jobs/application',[JobController::class,'applicant'])->name('my.applicants');
 
 
 //user Profile
@@ -47,13 +49,17 @@ Route::post('company/logo',[CompanyController::class,'companylogo'])->name('comp
 Route::get('jobs/create',[JobController::class,'create'])->name('jobs.create');
 Route::post('jobs/create',[JobController::class,'store'])->name('jobs.store');
 Route::get('jobs/my-job',[JobController::class,'myjob'])->name('myjob');
-Route::get('jobs/viewalljobs',[JobController::class,'alljobs'])->name('viewalljobs');
+Route::get('all-jobs',[JobController::class ,'listAllJobs'])->name('all.jobs');
+Route::get('search-jobs',[JobController::class,'search'])->name('search.job.options');
 
-
+//add to fav
+Route::post('/save/{id}',[FavouriteController::class, 'saveJob'])->name('save');
+Route::post('/unsave/{id}',[FavouriteController::class, 'unSaveJob'])->name('unsave');
 
 
 
 
 Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

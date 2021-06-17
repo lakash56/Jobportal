@@ -36,20 +36,40 @@
             <br>
             @if(Auth::check()&&Auth::user()->user_type=='seeker')
                 @if(!$job->checkApplication())
-                    <form action="{{route('apply',[$job->id])}}" method="Post">
+                   {{--  <form action="{{route('apply',[$job->id])}}" method="Post">
                         @csrf
                         <button type="submit" class="btn btn-success btn-sm" style="width:100%">Apply</button>
+                    </form> --}}
+                    {{-- jobid={{$job->id}} --}}
+                    <div id="app">
+                    <apply-component :jobid={{$job->id}} ></apply-component>
+                    </div>
+                    <br>
+
+                @endif
+                {{-- <div id="app">
+                    <favourite-component :jobid={{$job->id}} :favourited={{$job->checkSaved()?'true':'false'}}></favourite-component>
+                </div> --}}
+                 @if(!$job->checkSaved())
+                     <form action="{{route('save',[$job->id])}}" method="Post">
+                        @csrf
+                        <button type="submit" class="btn btn-success" style="width:100%">save</button>
                     </form>
                 @else
-                <p>Your application has been sent !!!</p>
+                <form action="{{route('unsave',[$job->id])}}" method="Post">
+                    @csrf
+                    <button type="submit" class="btn btn-dark" style="width:100%">Unsave</button>
+                </form>
                 @endif
             @endif
-        </div>
-        @if(Session::has('message'))
+
+         {{--    @if(Session::has('message'))
             <div class="alert alert-success">
                 {{Session::get('message')}}
             </div>
-            @endif
+            @endif --}}
+        </div>
+
     </div>
 </div>
 @endsection

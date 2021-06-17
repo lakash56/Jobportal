@@ -7,12 +7,13 @@ use App\Models\Job;
 use App\Models\Company;
 use App\Http\Requests\JobPostRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
 
 class JobController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('employer',['except'=>array('index','show','apply','alljobs')]);
+        $this->middleware('employer',['except'=>array('index','show','apply','listAllJobs','search')]);
     }
 
     //
@@ -80,28 +81,37 @@ class JobController extends Controller
         return view('jobs.applicants',compact('applicants'));
     }
 
-    public function allJobs(Request $request){
+    public function listAllJobs()
+    {
+        //dd('WORKING');
 
-        $keyword = $request->get('title');
-        $type = $request->get('type');
-        $category = $request->get('category_id');
-        $address = $request->get('address');
+        $jobs = Job::latest()->orderByDesc('created_at')->paginate(1);
+        $categories = Category::latest()->get();
 
-        /* if($keyword||$type||$category||$address){ */
-            $jobs = Job::where('title','LIKE','%'.$keyword.'%')
-            ->orwhere('type',$type)
-            ->orwhere('category_id',$category)
-            ->orwhere('address',$address)->paginate(1);
-            return view('jobs.alljobs',compact('jobs'));
-        /* } */
+        return view('jobs.alljobs', compact('jobs', 'categories'));
+    }
 
-       /*  else{
-            $jobs = Job::paginate(1);
-            return view('jobs.alljobs',compact('jobs'));
-        } */
+    public function search(Request $request)
+    {
+
+        $title =  $request->input('title');
+        $type = $request->input('type');
+        $category = $request->input('category_id');
+        $address = $request->input('address');
 
 
+        $jobs = Job::where('title', 'LIKE', '%' . ucfirst($title) . '%')
+        ->where('type' , 'LIKE', '%' . $type . '%' )
+        ->where('category_id' , 'LIKE', '%' . $category . '%' )
+        ->where('address','LIKE','%' . $address . '%')
+        ->paginate(1);
 
+       if ($jobs->isEmpty()) {
+        return redirect()->route('all.jobs')->with('message','No Jobs Foound!!');
+        }
 
+        $categories = Category::latest()->get();
+
+        return view('jobs.alljobs', compact('jobs', 'categories'));
     }
 }

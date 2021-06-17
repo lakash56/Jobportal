@@ -27,11 +27,38 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/fontawesome.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('css/owl.css')}}"> --}}
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <body>
+
+    <!-- Header -->
+    <div class="sub-header">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-xs-12">
+              <ul class="left-info">
+                <li><a href="#"><i class="fa fa-envelope"></i> contact@company.com</a></li>
+                <li><a href="#"><i class="fa fa-phone"></i> 123-456-7890</a></li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <ul class="right-icons">
+                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -97,9 +124,15 @@
                                     <a class="dropdown-item" href="{{ route('myjob') }}">
                                         {{ __('View My Jobs') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('my.applicants') }}">
+                                        {{ __('Applications') }}
+                                    </a>
                                     @else
                                     <a class="dropdown-item" href="{{ route('profile.view') }}">
                                         {{ __('My Profile') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        {{ __('Saved Jobs') }}
                                     </a>
                                     @endif
 

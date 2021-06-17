@@ -5,7 +5,9 @@
 <div class="container">
     <div class="row justify-content-center">
 
-    <form action="{{route('viewalljobs')}}" method="GET">
+
+    <form action="{{ route('search.job.options') }}" method="GET">
+        @csrf
         <div class="form-inline">
             <div class="form-group mx-sm-3">
                 <label>Keyword&nbsp;</label>
@@ -14,7 +16,7 @@
             <div class="form-group">
                 <label>Employement type &nbsp;</label>
                 <select class="form-control" name="type">
-                    <option value="">Select</option>
+                    <option disabled selected>--Select--</option>
                     <option value="fulltime">Full Time</option>
                     <option value="parttime">Part Time</option>
                     <option value="freelancer">Freelancer</option>
@@ -23,8 +25,8 @@
             <div class="form-group">
                 <label>Category&nbsp;</label>
                 <select name="category_id" class="form-control">
-                    <option value="">Select</option>
-                    @foreach (App\Models\Category::all() as $cat)
+                    <option disabled selected>--Select--</option>
+                    @foreach ($categories as $cat)
                         <option value="{{$cat->id}}">{{$cat->name}}</option>
                     @endforeach
                 </select>&nbsp;&nbsp;&nbsp;
@@ -39,6 +41,11 @@
 
         </div>
     </form>
+    @if(Session::has('message'))
+    <div class="alert alert-success">
+        {{Session::get('message')}}
+    </div>
+    @endif
 
         <table class="table">
             <thead>
@@ -49,6 +56,7 @@
                 <th></th>
             </thead>
             <tbody>
+                @if($jobs)
                 @foreach($jobs as $job)
                 <tr>
                     <td>
@@ -68,9 +76,14 @@
                     </td>
                 </tr>
                 @endforeach
+                @else
+                 <div class="alert alert-danger text-center">search type does not exists...</div>
+                @endif
+
             </tbody>
         </table>
-        {{$jobs->appends(Illuminate\Support\Facades\Request::except('page'))->links('pagination::bootstrap-4')}}
+        {{-- {!! $jobs->links() !!} --}}
+{{$jobs->appends(Illuminate\Support\Facades\Request::except('page'))->links('pagination::bootstrap-4')}}
     </div>
 </div>
 
@@ -81,4 +94,3 @@
         color: #4183D7;
     }
 </style>
-
