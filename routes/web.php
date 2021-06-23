@@ -1,11 +1,14 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserprofileController;
 use App\Http\Controllers\EmployerRegisterController;
 use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EmailController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -19,11 +22,13 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', [JobController::class, 'index'])->name('home');
+Route::get('/', [JobController::class, 'index'])->name('landing.page');
 Route::get('jobs/edit/{id}',[JobController::class,'edit'])->name('job.edit');
 Route::post('jobs/edit/{id}',[JobController::class,'update'])->name('job.update');
 Route::get('/jobs/{id}/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/company/{id}/{company}', [CompanyController::class, 'index'])->name('company.index');
+
+Route::get('/category/{id}', [CategoryController::class, 'singleJob'])->name('category.jobs');
 
 //apply
 Route::post('/applications/{id}',[JobController::class,'apply'])->name('apply');
@@ -51,13 +56,22 @@ Route::post('jobs/create',[JobController::class,'store'])->name('jobs.store');
 Route::get('jobs/my-job',[JobController::class,'myjob'])->name('myjob');
 Route::get('all-jobs',[JobController::class ,'listAllJobs'])->name('all.jobs');
 Route::get('search-jobs',[JobController::class,'search'])->name('search.job.options');
+Route::get('find-jobs',[JobController::class,'homeSearch'])->name('find.jobs');
+
 
 //add to fav
 Route::post('/save/{id}',[FavouriteController::class, 'saveJob'])->name('save');
 Route::post('/unsave/{id}',[FavouriteController::class, 'unSaveJob'])->name('unsave');
 
+//search
 
+Route::get('/jobs/search',[JobController::class,'searchJobs'])->name('search.job');
 
+//company
+Route::get('/all-company',[CompanyController::class,'company'])->name('list.all.company');
+
+//email
+Route::post('/job/send',[EmailController::class, 'send'])->name('mail.send');
 
 Auth::routes();
 Auth::routes(['verify' => true]);

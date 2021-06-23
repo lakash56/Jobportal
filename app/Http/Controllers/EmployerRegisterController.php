@@ -25,6 +25,6 @@ class EmployerRegisterController extends Controller
             'slug'=>request('cname')
 
         ]);
-        return redirect()->to('login');
+        return redirect()->back()->with('message','Pleas Go to Login Page');
     }
 }

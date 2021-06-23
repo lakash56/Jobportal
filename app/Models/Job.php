@@ -24,7 +24,11 @@ class Job extends Model
         'address',
         'type',
         'status',
-        'last_date'
+        'last_date',
+        'number_of_vacancy',
+        'experience_year',
+        'gender',
+        'salary'
    ];
 
     public function getRouteKeyName()

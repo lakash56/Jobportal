@@ -28,42 +28,25 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/fontawesome.css')}}">
+    <link rel="stylesheet" href="{{asset('css/mystyle.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" integrity="sha256-3sPp8BkKUE7QyPSl6VfBByBroQbKxKG7tsusY2mhbVY=" crossorigin="anonymous" />
+
+
     {{-- <link rel="stylesheet" href="{{asset('css/owl.css')}}"> --}}
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
+
 </head>
 <body>
-
-    <!-- Header -->
-    <div class="sub-header">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-8 col-xs-12">
-              <ul class="left-info">
-                <li><a href="#"><i class="fa fa-envelope"></i> contact@company.com</a></li>
-                <li><a href="#"><i class="fa fa-phone"></i> 123-456-7890</a></li>
-              </ul>
-            </div>
-            <div class="col-md-4">
-              <ul class="right-icons">
-                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
 
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    Jobs For You
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -79,6 +62,9 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/') }}">Home</a>
+                            </li>
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -88,13 +74,15 @@
 
 
                             @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('employer.register') }}">{{ __('Employer Register') }}</a>
-                                </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Job Seeker Register') }}</a>
+                                    <a class="nav-link btn btn-primary btn-sm" href="{{ route('register') }}">{{ __('Sign Up') }}</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-success btn-sm" href="{{ route('employer.register') }}">{{ __('Employer Register') }}</a>
+                                </li>
+
+
                             @endif
                             @else
 
@@ -156,6 +144,11 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer>
+            @yield('footer')
+        </footer>
     </div>
+
 </body>
 </html>

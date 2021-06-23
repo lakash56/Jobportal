@@ -27,6 +27,10 @@ class CreateJobsTable extends Migration
             $table->string('type')->nullable();
             $table->string('status')->nullable();
             $table->date('last_date')->nullable();
+            $table->integer('number_of_vacancy')->nullable();
+            $table->integer('experience_year')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('salary')->nullable();
             $table->timestamps();
         });
     }

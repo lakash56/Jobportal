@@ -13,18 +13,48 @@ class JobController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('employer',['except'=>array('index','show','apply','listAllJobs','search')]);
+        $this->middleware('employer',['except'=>array('index','show','apply','listAllJobs','search','searchJobs','homeSearch')]);
     }
 
     //
     public function index(){
         $jobs = Job::latest()->limit(10)->where('status',1)->get();
         $companies = Company::limit(8)->get();
-        return view('welcome',compact('jobs','companies'));
+        $categories = Category::with('jobs')->get();
+        return view('welcome',compact('jobs','companies','categories'));
     }
 
     public function show($id,Job $job){
-        return view('jobs.show', compact('job'));
+
+        //dd($job->position);
+        $data = [];
+
+        $jobBasedOnCategories = Job::latest()
+                                ->where('category_id',$job->category_id)
+                                ->whereDate('last_date','>',date('Y-m-d'))
+                                ->where('id','!=',$job->id)
+                                ->where('status',1)
+                                ->limit(6)
+                                ->get();
+        array_push($data,$jobBasedOnCategories);
+       $jobBasedOnCompany = Job::latest()
+                                ->where('company_id',$job->company_id)
+                                ->whereDate('last_date','>',date('Y-m-d'))
+                                ->where('id','!=',$job->id)
+                                ->where('status',1)
+                                ->limit(6)
+                                ->get();
+        array_push($data,$jobBasedOnCompany);
+        /* $jobBasedOnPosition = Job::latest()->where('position','LIKE','%'.$job->position.'%')
+                                            ->whereDate('last_date','>',date('Y-m-d'))
+                                            ->where('id','!=',$job->id); */
+        //dd($jobBasedOnPosition);
+        //array_push($data,$jobBasedOnPosition);
+
+        $collection = collect($data);
+        $unique = $collection->unique("id");
+        $jobRecommendations = $unique->values()->first();
+       return view('jobs.show', compact('job','jobRecommendations'));
 
     }
 
@@ -36,6 +66,7 @@ class JobController extends Controller
         $user_id = auth()->user()->id;
         $company = Company::where('user_id',$user_id)->first();
         $company_id = $company->id;
+        /* dd($request->all()); */
         Job::create([
             'user_id'=>$user_id,
             'company_id'=> $company_id,
@@ -48,7 +79,11 @@ class JobController extends Controller
             'address'=>request('address'),
             'type'=>request('type'),
             'status'=>request('status'),
-            'last_date'=>request('last_date')
+            'last_date'=>request('last_date'),
+            'number_of_vacancy'=>request('no_of_vacancy'),
+            'experience_year'=>request('experience_year'),
+            'gender'=>request('gender'),
+            'salary'=>request('salary')
         ]);
         return redirect()->back()->with('message','Job Posted Succesfully ');
     }
@@ -64,7 +99,7 @@ class JobController extends Controller
     }
 
     public function update(Request $request,$id){
-       // dd($request->all());
+// dd($request->all(),$jobs);
        $jobs = Job::findOrFail($id);
        $jobs->update($request->all());
        return redirect()->back()->with('message','Jobs Sucessfully Updated');
@@ -85,7 +120,7 @@ class JobController extends Controller
     {
         //dd('WORKING');
 
-        $jobs = Job::latest()->orderByDesc('created_at')->paginate(1);
+        $jobs = Job::latest()->orderByDesc('created_at')->paginate(10);
         $categories = Category::latest()->get();
 
         return view('jobs.alljobs', compact('jobs', 'categories'));
@@ -93,6 +128,18 @@ class JobController extends Controller
 
     public function search(Request $request)
     {
+        //front page
+        $search= $request->get('search');
+        $address= $request->get('address');
+            if($search && $address){
+                $jobs = Job::where('title', 'LIKE', '%' . ucfirst($search) . '%')
+                ->where('type' , 'LIKE', '%' . $search . '%' )
+                ->where('category_id' , 'LIKE', '%' . $search . '%' )
+                ->where('address','LIKE','%' . $address . '%')
+                ->paginate(10);
+                return view('jobs.alljobs',compact('jobs'));
+
+            }
 
         $title =  $request->input('title');
         $type = $request->input('type');
@@ -106,12 +153,40 @@ class JobController extends Controller
         ->where('address','LIKE','%' . $address . '%')
         ->paginate(1);
 
-       if ($jobs->isEmpty()) {
+        if ($jobs->isEmpty()) {
         return redirect()->route('all.jobs')->with('message','No Jobs Foound!!');
         }
 
         $categories = Category::latest()->get();
 
         return view('jobs.alljobs', compact('jobs', 'categories'));
+    }
+
+    public function searchJobs(Request $request){
+        $keyword = $request->get('keyword');
+        $users = Job::where('title','like','%'.$keyword.'%')->limit(5)->get();
+        return response()->json($users);
+    }
+
+    public function homeSearch(Request $request){
+        $search= $request->get('search');
+
+
+                $jobs = Job::where('title', 'LIKE', '%' . ucfirst($search) . '%')
+                ->orwhere('type' , 'LIKE', '%' . $search . '%' )
+                ->orwhere('category_id' , 'LIKE', '%' . $search . '%' )
+                ->orwhere('address','LIKE','%' . $search . '%')
+                ->paginate(10);
+
+                $categories = Category::latest()->get();
+
+                if ($jobs->isEmpty()) {
+                    return redirect()->route('all.jobs')->with('message','No Jobs Foound!!');
+                    }
+
+                return view('jobs.alljobs',compact('jobs','categories'));
+
+
+
     }
 }

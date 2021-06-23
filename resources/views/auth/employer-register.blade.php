@@ -1,13 +1,24 @@
-@extends('layouts.app')
-
+@extends('layouts.main')
 @section('content')
 <div class="container">
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-12">
+            <div class="section-heading">
+              <h2>Employer<em>Registration</em></h2>
+              <span>Hire New Talents</span>
+            </div>
+        </div>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Employer Registration') }}</div>
+            @if(Session::has('message'))
+            <div class="alert alert-success">
+                {{Session::get('message')}}
+            </div>
+            @endif
 
-                <div class="card-body">
                     <form method="POST" action="{{ route('emp.register') }}">
                         @csrf
 
@@ -72,9 +83,13 @@
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
+</div>
+
+<div class="mb-2">
+
+</div>
+@include('partials.footer')
+
 @endsection

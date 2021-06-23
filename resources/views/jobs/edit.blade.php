@@ -77,6 +77,53 @@
                         </span>
                         @enderror
                     </div>
+
+                    {{-- New  --}}
+                    <div class="form-group">
+                        <label for="address">Number of Vacancy</label>
+                        <input type="number" name="no_of_vacancy" class="form-control @error('no_of_vacancy') is-invalid @enderror" value="{{ $jobs->number_of_vacancy }}">
+
+                        @error('no_of_vacancy')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    {{-- end --}}
+                    {{-- experience --}}
+                     <div class="form-group">
+                        <label for="address">Year of Experience</label>
+                        <input type="number" name="experience_year" class="form-control @error('experience_year') is-invalid @enderror" value="{{$jobs->experience_year}}">
+
+                        @error('experience')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    {{-- end --}}
+                    {{--  --}}
+                    <div class="form-group">
+                        <label for="status">Gender:</label>
+                        <select class="form-control" name="gender">
+                            <option value="any"{{$jobs->gender =='any'?'selected':''}}>Any</option>
+                            <option value="male"{{$jobs->gender =='male'?'selected':''}}>Male</option>
+                            <option value="female"{{$jobs->gender =='female'?'selected':''}}>Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Salary:</label>
+                        <select class="form-control" name="salary">
+                            <option value="negotiable"{{$jobs->salary =='negotiable'?'selected':''}}>Negotiable</option>
+                            <option value="10000-20000"{{$jobs->salary =='10000-20000'?'selected':''}}>10000-20000</option>
+                            <option value="20000-30000"{{$jobs->salary =='20000-30000'?'selected':''}}>20000-30000</option>
+                            <option value="30000-50000"{{$jobs->salary =='30000-50000'?'selected':''}}>30000-50000</option>
+                            <option value="60000 plus"{{$jobs->salary =='60000 plus'?'selected':''}}>60000 plus</option>
+                        </select>
+                    </div>
+                    {{-- new --}}
                     <div class="form-group">
                         <label for="type">Type:</label>
                         <select class="form-control" name="type">
