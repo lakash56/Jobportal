@@ -8,6 +8,7 @@ use App\Http\Controllers\UserprofileController;
 use App\Http\Controllers\EmployerRegisterController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailController;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,6 +73,9 @@ Route::get('/all-company',[CompanyController::class,'company'])->name('list.all.
 
 //email
 Route::post('/job/send',[EmailController::class, 'send'])->name('mail.send');
+
+//admin
+Route::get('/dashboard',[DashboardController::class,'index'])->middleware('admin');
 
 Auth::routes();
 Auth::routes(['verify' => true]);

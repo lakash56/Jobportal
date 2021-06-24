@@ -28,7 +28,6 @@ class HomeController extends Controller
         if(Auth::user()->user_type=='employer'){
             return redirect('/company/create');
             }
-        $adminRole = Auth::user()->user_type=='admin';
         if(Auth::user()->user_type=='admin'){
         return redirect('/dashboard');
         }

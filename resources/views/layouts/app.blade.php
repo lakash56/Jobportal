@@ -115,13 +115,16 @@
                                     <a class="dropdown-item" href="{{ route('my.applicants') }}">
                                         {{ __('Applications') }}
                                     </a>
-                                    @else
+
+                                    @elseif (Auth::user()->user_type=='seeker')
                                     <a class="dropdown-item" href="{{ route('profile.view') }}">
                                         {{ __('My Profile') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('home') }}">
                                         {{ __('Saved Jobs') }}
                                     </a>
+                                    @else
+                                    
                                     @endif
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
