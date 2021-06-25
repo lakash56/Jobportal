@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Http\Requests\JobPostRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
+use App\Models\Post;
 
 class JobController extends Controller
 {
@@ -21,7 +22,8 @@ class JobController extends Controller
         $jobs = Job::latest()->limit(10)->where('status',1)->get();
         $companies = Company::limit(8)->get();
         $categories = Category::with('jobs')->get();
-        return view('welcome',compact('jobs','companies','categories'));
+        $posts = Post::where('status',1)->get();
+        return view('welcome',compact('jobs','companies','categories','posts'));
     }
 
     public function show($id,Job $job){

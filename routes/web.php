@@ -75,7 +75,17 @@ Route::get('/all-company',[CompanyController::class,'company'])->name('list.all.
 Route::post('/job/send',[EmailController::class, 'send'])->name('mail.send');
 
 //admin
-Route::get('/dashboard',[DashboardController::class,'index'])->middleware('admin');
+Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.home')->middleware('admin');
+Route::get('/dashboard/create',[DashboardController::class,'create'])->name('post.create')->middleware('admin');
+Route::post('/dashboard/create',[DashboardController::class,'store'])->name('post.store')->middleware('admin');
+Route::post('/dashboard/destroy',[DashboardController::class,'destroy'])->name('post.delete')->middleware('admin');
+Route::get('/dashboard/{id}/edit',[DashboardController::class,'edit'])->name('post.edit')->middleware('admin');
+Route::post('/dashboard/{id}/update',[DashboardController::class,'update'])->name('post.update')->middleware('admin');
+Route::get('/dashboard/trash',[DashboardController::class,'trash'])->name('post.trash')->middleware('admin');
+Route::get('/dashboard/{id}/create',[DashboardController::class,'restore'])->name('post.restore')->middleware('admin');
+Route::get('/dashboard/{id}/toggle',[DashboardController::class,'toggle'])->name('post.toggle')->middleware('admin');
+
+
 
 Auth::routes();
 Auth::routes(['verify' => true]);
