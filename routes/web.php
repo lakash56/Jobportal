@@ -62,7 +62,7 @@ Route::get('all-jobs',[JobController::class ,'listAllJobs'])->name('all.jobs');
 Route::get('search-jobs',[JobController::class,'search'])->name('search.job.options');
 Route::get('find-jobs',[JobController::class,'homeSearch'])->name('find.jobs');
 
-Route::get('/select/{id}/toggle',[JobController::class,'applicantsToggle'])->name('select.toggle');
+Route::get('/select/{user_id}/{job_id}/toggle',[JobController::class,'applicantsToggle'])->name('select.toggle');
 
 
 //add to fav

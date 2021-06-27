@@ -40,7 +40,7 @@ class Job extends Model
     }
 
     public function users(){
-        return $this->belongsToMany(User::class)->withTimestamps()->withPivot('status');
+        return $this->belongsToMany(User::class,'job_user','job_id','user_id')->withPivot('status')->withTimestamps();
     }
 
     public function checkApplication(){
