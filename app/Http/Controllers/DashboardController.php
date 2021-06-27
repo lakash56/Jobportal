@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Job;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
+
 class DashboardController extends Controller
 {
     //
@@ -98,5 +102,48 @@ class DashboardController extends Controller
         $posts->save();
         return redirect()->back()->with('message','Status Updated Successfully');
      }
+
+     public function read($id){
+        $post = Post::find($id);
+        return view('jobs.singleblog',compact('post'));
+     }
+
+     public function getAllJobs(){
+         $jobs = Job::latest()->paginate(2);
+         return view('admin.job',compact('jobs'));
+     }
+
+     public function changeJobStatus($id){
+        $jobs = Job::find($id);
+        $jobs->status = !$jobs->status;
+        $jobs->save();
+        return redirect()->back()->with('message','Status Updated Successfully');
+     }
+
+     public function getAllUser(){
+        $users = User::latest()->paginate(20);
+        return view('admin.users',compact('users'));
+    }
+
+    public function addCategory(){
+        $categories = Category::latest()->paginate(10);
+        return view('admin.addcategory',compact('categories'));
+    }
+
+    public function category(Request $request){
+        $this->validate($request,[
+            'name'=>'required'
+
+        ]);
+
+
+        Category::create([
+                'name'=>$request->get('name'),
+
+            ]);
+        return redirect()->back()->with('message','Category Created successfully');
+
+
+    }
 
 }

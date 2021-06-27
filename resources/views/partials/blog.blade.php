@@ -10,16 +10,20 @@
       <div class="nonloop-block-15 owl-carousel">
 
         @foreach ($posts as $post )
+
           <div class="media-with-text">
             <div class="img-border-sm mb-4">
               <a href="#" class="image-play">
                 <img src="{{asset('storage/'.$post->image)}}" alt="" class="img-fluid" style="height: 400px">
               </a>
             </div>
-            <h2 class="heading mb-0 h5"><a href="#">{{$post->title}}</a></h2>
-            <span class="mb-3 d-block post-date"><a href="#">{{$post->created_at->diffForHumans()}}</a></span>
+            <a href="{{route('post.read',[$post->id,$post->slug])}}">
+            <h2 class="heading mb-0 h5">{{$post->title}}</h2>
+            <span class="mb-3 d-block post-date">{{$post->created_at->diffForHumans()}}</span>
             <p>{{str_limit($post->content,50)}}</p>
+            </a>
           </div>
+
 
           @endforeach
 

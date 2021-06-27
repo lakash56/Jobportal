@@ -3,11 +3,11 @@
 
     <div class="container py-5 ">
         <div class="section-heading">
-            <h2>Featured <em>Jobs</em></h2>
+            <h2>Featured <em>Companies</em></h2>
         </div>
         <div class="row">
             @foreach ($companies as $company)
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card" style="width: 18rem">
                 <img class ="" src="{{asset('upload/logo')}}/{{$company->logo}}" style="float: left;width:100%;height:100px;object-fit: cover;" >
                 <div class="card-body">
@@ -27,4 +27,6 @@
         </div>
     </div>
 
+
+    @include('partials.footer')
 @endsection

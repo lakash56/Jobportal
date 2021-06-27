@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Dashboard-Jobs For You</title>
 
     <!-- Scripts -->
     <script defer src="{{ asset('js/app.js') }}"></script>
@@ -124,7 +124,7 @@
                                         {{ __('Saved Jobs') }}
                                     </a>
                                     @else
-                                    
+
                                     @endif
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"

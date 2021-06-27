@@ -34,8 +34,10 @@
                       <li>
                         @if(Auth::user()->user_type=='seeker')
                         <a class="btn btn-outline-warning py-3 px-4" href="{{route('profile.view')}}">Dashboard</a>
-                        @else
+                        @elseif(Auth::user()->user_type=='employer')
                         <a class="btn btn-outline-warning py-3 px-4" href="{{route('company.create')}}">Dashboard</a>
+                        @else
+                        <a class="btn btn-outline-warning py-3 px-4" href="{{route('admin.home')}}">Dashboard</a>
                          @endif
                       </li>
                     @endif

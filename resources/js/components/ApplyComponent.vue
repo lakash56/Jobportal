@@ -1,7 +1,7 @@
 <template>
     <div>
        <form v-on:submit.prevent="formSubmit">
-
+           <input type="hidden" name="status" value="0">
            <button v-if="show" type="submit" class="btn btn-success" style="width
            :100%;">Apply</button>
 

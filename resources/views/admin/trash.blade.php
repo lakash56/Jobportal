@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         @if(Session::has('message'))
              <div class="alert alert-success">{{Session::get('message')}}</div>
 
@@ -9,10 +9,10 @@
             <h3>Trash<em>posts</em></h3>
             </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @include('admin.sidenav')
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="card">
             <table class="table">
                 <thead>

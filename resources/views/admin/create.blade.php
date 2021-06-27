@@ -1,18 +1,21 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         @if(Session::has('message'))
              <div class="alert alert-success">{{Session::get('message')}}</div>
 
         @endif
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-2">
                 @include('admin.sidenav')
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">
+                        Add Blog Post
+                    </div>
+                    <div class="card-body">
                         <form action="{{route('post.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="from-group">

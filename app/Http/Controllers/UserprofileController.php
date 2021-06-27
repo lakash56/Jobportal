@@ -16,6 +16,10 @@ class UserprofileController extends Controller
         return view('profile.index');
     }
 
+    public function createcv(){
+        return view('profile.mycvbuilder');
+    }
+
     public function store(Request $request){
         //request('address');
 
@@ -90,5 +94,7 @@ class UserprofileController extends Controller
         }
 
     }
+
+
 }
 

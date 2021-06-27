@@ -118,20 +118,21 @@
             <br>
             @if(Auth::check()&&Auth::user()->user_type=='seeker')
                 @if(!$job->checkApplication())
-                   {{--  <form action="{{route('apply',[$job->id])}}" method="Post">
+                   <form action="{{route('apply',[$job->id])}}" method="Post">
                         @csrf
                         <button type="submit" class="btn btn-success btn-sm" style="width:100%">Apply</button>
-                    </form> --}}
+                    </form>
                     {{-- jobid={{$job->id}} --}}
-                    <div id="app">
+                    {{-- <div id="app">
                     <apply-component :jobid={{$job->id}} ></apply-component>
                     </div>
-                    <br>
+                    <br> --}}
 
                 @endif
                 {{-- <div id="app">
                     <favourite-component :jobid={{$job->id}} :favourited={{$job->checkSaved()?'true':'false'}}></favourite-component>
                 </div> --}}
+                <br>
                  @if(!$job->checkSaved())
                      <form action="{{route('save',[$job->id])}}" method="Post">
                         @csrf

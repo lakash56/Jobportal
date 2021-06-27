@@ -23,6 +23,7 @@
                             <th>Experince</th>
                             <th>Resume</th>
                             <th>Cover Letter</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         @foreach ($applicant->users as $user)
@@ -36,6 +37,13 @@
                             <td>{{$user->profile->experience}}</td>
                             <td><a href="{{Storage::url($user->profile->resume)}}">Resume</a></td>
                             <td><a href="{{Storage::url($user->profile->cover_letter)}}">Cover Letter</a></td>
+                            <td>@if($user->status=='1')
+                                <a href="{{route('select.toggle',[$user->id])}}" class="badge badge-success">Selected</a>
+                            @else
+                                <a href="{{route('select.toggle',[$user->id])}}" class="badge badge-primary">pending</a>
+                            @endif
+                        </td>
+
                           </tr>
                         </tbody>
                         @endforeach

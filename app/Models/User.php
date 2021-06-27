@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function users(){
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(Job::class)->withTimestamps()->withPivot('status');
     }
     public function favourites(){
         return $this->belongsToMany(Job::class,'favourites','user_id','job_id')->withTimestamps();

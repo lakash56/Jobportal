@@ -37828,6 +37828,8 @@ var render = function() {
         }
       },
       [
+        _c("input", { attrs: { type: "hidden", name: "status", value: "0" } }),
+        _vm._v(" "),
         _vm.show
           ? _c(
               "button",

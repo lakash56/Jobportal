@@ -10,6 +10,8 @@ use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\SelectController;
+use App\Http\Controllers\TestimonialController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -42,6 +44,7 @@ Route::post('user/profile/create',[UserprofileController::class,'store'])->name(
 Route::post('user/coverletter',[UserprofileController::class,'coverletter'])->name('cover.letter');
 Route::post('user/resume',[UserprofileController::class,'resume'])->name('resume');
 Route::post('user/avatar',[UserprofileController::class,'avatar'])->name('avatar');
+Route::get('user/cv',[UserprofileController::class,'createcv'])->name('profile.cv');
 
 /* employer routes */
 Route::view('employer/register','auth.employer-register')->name('employer.register');
@@ -59,10 +62,15 @@ Route::get('all-jobs',[JobController::class ,'listAllJobs'])->name('all.jobs');
 Route::get('search-jobs',[JobController::class,'search'])->name('search.job.options');
 Route::get('find-jobs',[JobController::class,'homeSearch'])->name('find.jobs');
 
+Route::get('/select/{id}/toggle',[JobController::class,'applicantsToggle'])->name('select.toggle');
+
 
 //add to fav
 Route::post('/save/{id}',[FavouriteController::class, 'saveJob'])->name('save');
 Route::post('/unsave/{id}',[FavouriteController::class, 'unSaveJob'])->name('unsave');
+
+//select
+//Route::post('/select/{id}',[SelectController::class, 'select'])->name('save');
 
 //search
 
@@ -85,9 +93,27 @@ Route::get('/dashboard/trash',[DashboardController::class,'trash'])->name('post.
 Route::get('/dashboard/{id}/create',[DashboardController::class,'restore'])->name('post.restore')->middleware('admin');
 Route::get('/dashboard/{id}/toggle',[DashboardController::class,'toggle'])->name('post.toggle')->middleware('admin');
 
+//blog
+Route::get('/blog/{id}/{slug}',[DashboardController::class,'read'])->name('post.read');
+
+//testimonial
+Route::get('testimonial',[TestimonialController::class,'index'])->name('testimonial.view')->middleware('admin');
+Route::get('testimonial/create',[TestimonialController::class,'creteTestimonial'])->name('testimonial')->middleware('admin');
+Route::post('testimonial/create',[TestimonialController::class,'store'])->name('testimonial.store')->middleware('admin');
+
+//admin job
+Route::get('/dashboard/job',[DashboardController::class,'getAllJobs'])->name('admin.jobs')->middleware('admin');
+Route::get('/dashboard/{id}/jobs',[DashboardController::class,'changeJobStatus'])->name('job.status')->middleware('admin');
+
+
+Route::get('/dashboard/users',[DashboardController::class,'getAllUser'])->name('admin.user')->middleware('admin');
+Route::get('/dashboard/addCategory',[DashboardController::class,'addCategory'])->name('admin.category')->middleware('admin');
+Route::post('/dashboard/addCategory',[DashboardController::class,'category'])->name('admin.addcategory')->middleware('admin');
+
 
 
 Auth::routes();
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

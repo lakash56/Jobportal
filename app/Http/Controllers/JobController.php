@@ -8,7 +8,9 @@ use App\Models\Company;
 use App\Http\Requests\JobPostRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
+use App\Models\JobUser;
 use App\Models\Post;
+use App\Models\Testimonial;
 
 class JobController extends Controller
 {
@@ -23,7 +25,8 @@ class JobController extends Controller
         $companies = Company::limit(8)->get();
         $categories = Category::with('jobs')->get();
         $posts = Post::where('status',1)->get();
-        return view('welcome',compact('jobs','companies','categories','posts'));
+        $testimonials = Testimonial::orderBy('id','DESC')->first();
+        return view('welcome',compact('jobs','companies','categories','posts','testimonials'));
     }
 
     public function show($id,Job $job){
@@ -117,6 +120,27 @@ class JobController extends Controller
         $applicants = Job::has('users')->where('user_id',auth()->user()->id)->get();
         return view('jobs.applicants',compact('applicants'));
     }
+
+    public function applicantsToggle($id){
+        //$posts = Post::find($id);
+      /*   $applicants = Job::has('users')->find($id);
+        $applicants
+        $applicants->save();
+        return redirect()->back()->with('message','Status Updated Successfully'); */
+        //$applicants = Job::with('users')->where('user_id',auth()->user()->id)->get();
+        //dd($applicants);
+        /* foreach ($applicants->users as $user) {
+            $user->pivot->status = 1;//your column;
+            $user->pivot->save();
+
+         }
+         return redirect()->back()->with('message','Status Updated Successfully'); */
+         $applicants = JobUser::find($id);
+        dd($applicants);
+         $applicants->status = 1;
+        $applicants->save();
+        return redirect()->back()->with('message','Status Updated Successfully');
+     }
 
     public function listAllJobs()
     {

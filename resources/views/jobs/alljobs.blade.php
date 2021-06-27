@@ -99,6 +99,7 @@
 </div>
 
 
+@include('partials.footer')
 @endsection
 <style>
     .fa{
