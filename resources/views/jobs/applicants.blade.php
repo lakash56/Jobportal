@@ -7,11 +7,7 @@
             <div class="card">
                 @foreach ($applicants as $applicant)
                 <div class="card-header"><a href="{{route('jobs.show',[$applicant->id,$applicant->slug])}}">{{$applicant->title}}</a></div>
-
                 <div class="card-body">
-
-
-
                     <table class="table">
                         <thead>
                           <tr>
@@ -37,12 +33,15 @@
                             <td>{{$user->profile->experience}}</td>
                             <td><a href="{{Storage::url($user->profile->resume)}}">Resume</a></td>
                             <td><a href="{{Storage::url($user->profile->cover_letter)}}">Cover Letter</a></td>
-                            <td>@if($user->status=='1')
-                                <a href="{{route('select.toggle',[$user->id])}}" class="badge badge-success">Selected</a>
-                            @else
-                                <a href="{{route('select.toggle',[$user->id])}}" class="badge badge-primary">pending</a>
-                            @endif
-                        </td>
+                            <td>
+                                @if ($user->pivot->status == 1)
+                                                        <a href="{{ route('select.toggle', [$user->id, $applicant->id]) }}"
+                                                            class="badge badge-success">Selected</a>
+                                                    @else
+                                                        <a href="{{ route('select.toggle', [$user->id,$applicant->id]) }}"
+                                                            class="badge badge-primary">pending</a>
+                                                    @endif
+                            </td>
 
                           </tr>
                         </tbody>

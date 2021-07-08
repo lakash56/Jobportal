@@ -10,6 +10,7 @@ use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\SelectController;
 use App\Http\Controllers\TestimonialController;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,11 @@ Route::post('user/coverletter',[UserprofileController::class,'coverletter'])->na
 Route::post('user/resume',[UserprofileController::class,'resume'])->name('resume');
 Route::post('user/avatar',[UserprofileController::class,'avatar'])->name('avatar');
 Route::get('user/cv',[UserprofileController::class,'createcv'])->name('profile.cv');
+Route::post('user/cv/create',[UserprofileController::class,'storecv'])->name('store.cv');
+
+//resume
+route::get('resume/index',[ResumeController::class,'index'])->name('resume.profile');
+route::get('resume/download',[ResumeController::class,'download'])->name('resume.download');
 
 /* employer routes */
 Route::view('employer/register','auth.employer-register')->name('employer.register');
@@ -62,7 +68,7 @@ Route::get('all-jobs',[JobController::class ,'listAllJobs'])->name('all.jobs');
 Route::get('search-jobs',[JobController::class,'search'])->name('search.job.options');
 Route::get('find-jobs',[JobController::class,'homeSearch'])->name('find.jobs');
 
-Route::get('/select/{id}/toggle',[JobController::class,'applicantsToggle'])->name('select.toggle');
+Route::get('/select/{user_id}/{job_id}/toggle',[JobController::class,'applicantsToggle'])->name('select.toggle');
 
 
 //add to fav
@@ -81,6 +87,7 @@ Route::get('/all-company',[CompanyController::class,'company'])->name('list.all.
 
 //email
 Route::post('/job/send',[EmailController::class, 'send'])->name('mail.send');
+Route::post('/confirmation',[EmailController::class, 'confirmMail'])->name('confirm.email');
 
 //admin
 Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.home')->middleware('admin');
@@ -108,6 +115,7 @@ Route::get('/dashboard/{id}/jobs',[DashboardController::class,'changeJobStatus']
 
 Route::get('/dashboard/users',[DashboardController::class,'getAllUser'])->name('admin.user')->middleware('admin');
 Route::get('/dashboard/addCategory',[DashboardController::class,'addCategory'])->name('admin.category')->middleware('admin');
+Route::get('/dashboard/selected-applicants',[DashboardController::class,'selectedApplicants'])->name('admin.selected')->middleware('admin');
 Route::post('/dashboard/addCategory',[DashboardController::class,'category'])->name('admin.addcategory')->middleware('admin');
 
 

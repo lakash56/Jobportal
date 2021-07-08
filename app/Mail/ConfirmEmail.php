@@ -7,10 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendJob extends Mailable
+class ConfirmEmail extends Mailable
 {
     use Queueable, SerializesModels;
-        public $data;
+    public $data;
     /**
      * Create a new message instance.
      *
@@ -20,7 +20,6 @@ class SendJob extends Mailable
     {
         //
         $this->data = $data;
-        
     }
 
     /**
@@ -30,6 +29,6 @@ class SendJob extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.jobEmails');
+        return $this->markdown('emails.confirmEmails');
     }
 }

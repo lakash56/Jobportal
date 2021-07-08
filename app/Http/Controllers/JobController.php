@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\JobUser;
 use App\Models\Post;
 use App\Models\Testimonial;
+use App\Models\User;
 
 class JobController extends Controller
 {
@@ -21,7 +22,7 @@ class JobController extends Controller
 
     //
     public function index(){
-        $jobs = Job::latest()->limit(10)->where('status',1)->get();
+        $jobs = Job::limit(10)->where('status',1)->get();
         $companies = Company::limit(8)->get();
         $categories = Category::with('jobs')->get();
         $posts = Post::where('status',1)->get();
@@ -121,26 +122,16 @@ class JobController extends Controller
         return view('jobs.applicants',compact('applicants'));
     }
 
-    public function applicantsToggle($id){
-        //$posts = Post::find($id);
-      /*   $applicants = Job::has('users')->find($id);
-        $applicants
-        $applicants->save();
-        return redirect()->back()->with('message','Status Updated Successfully'); */
-        //$applicants = Job::with('users')->where('user_id',auth()->user()->id)->get();
-        //dd($applicants);
-        /* foreach ($applicants->users as $user) {
-            $user->pivot->status = 1;//your column;
-            $user->pivot->save();
+    public function applicantsToggle($user_id,$job_id)
+    {
+      $user = User::findOrFail($user_id);
 
-         }
-         return redirect()->back()->with('message','Status Updated Successfully'); */
-         $applicants = JobUser::find($id);
-        dd($applicants);
-         $applicants->status = 1;
-        $applicants->save();
-        return redirect()->back()->with('message','Status Updated Successfully');
-     }
+        $job = Job::findOrFail($job_id);
+
+        $user->jobs()->updateExistingPivot($job->id, ['status' => 1]);
+
+        return redirect()->back()->with('message', 'Status Updated Successfully');
+    }
 
     public function listAllJobs()
     {

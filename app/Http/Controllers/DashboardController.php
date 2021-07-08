@@ -88,7 +88,7 @@ class DashboardController extends Controller
         ]);
     }
     public function trash(){
-        $posts = Post::onlyTrashed()->paginate(20);
+        $posts = Post::onlyTrashed()->get();
         return view('admin.trash',compact('posts'));
     }
     public function restore($id){
@@ -122,6 +122,8 @@ class DashboardController extends Controller
 
      public function getAllUser(){
         $users = User::latest()->paginate(20);
+
+
         return view('admin.users',compact('users'));
     }
 
@@ -144,6 +146,10 @@ class DashboardController extends Controller
         return redirect()->back()->with('message','Category Created successfully');
 
 
+    }
+    public function selectedApplicants(){
+        $applicants = Job::has('users')->get();
+        return view('admin.selected',compact('applicants'));
     }
 
 }

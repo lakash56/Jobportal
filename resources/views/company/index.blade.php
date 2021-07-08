@@ -4,9 +4,9 @@
     <div class="row justify-content-center" >
         <div class="col-md-12" style="color: #ffffff">
 
-          <div class="jumbotron justify-content-center">
+          <div class="jumbotron justify-content-center" style="background-image: url({{asset('upload/coverphoto')}}/{{$company->cover_photo}});" >
             <div class="section-heading">
-                <h2 class="display-4"><em>{{$company->cname}}<em></h2>
+                <h2 class="display-4"><em>{{$company->cname}}</em></h2>
               </div>
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Profile;
+use App\Models\UserCVDetail;
 
 class UserprofileController extends Controller
 {
@@ -18,6 +19,12 @@ class UserprofileController extends Controller
 
     public function createcv(){
         return view('profile.mycvbuilder');
+    }
+    public function storecv(Request $request){
+        //dd($request->all());
+        UserCVDetail::create($request->all());
+        return back();
+
     }
 
     public function store(Request $request){

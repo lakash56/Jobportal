@@ -22,6 +22,9 @@
                 <a href="{{route('admin.user')}}">View all User</a>
             </li>
             <li class="list-group-item">
+                <a href="{{route('admin.selected')}}">Selected Candidates</a>
+            </li>
+            <li class="list-group-item">
                 <a href="{{route('admin.category')}}">Add Category</a>
             </li>
 

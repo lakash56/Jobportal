@@ -129,9 +129,36 @@
                     {{-- Resume --}}
                     @if(!empty(Auth::user()->profile->resume))
                             <p><a href="{{Storage::url(Auth::user()->profile->resume)}}">Resume</p>
+
                     @else
                             <p>Please Update Resume</p>
+                            <a href="{{route('profile.cv')}}" class="btn btn-success">Build your CV</a>
                     @endif
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        Preview CV
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe src="{{route('resume.profile')}}" title="description" framborder="0"  width="100%" height="900"></iframe>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <a type="button" class="btn btn-primary" href="{{route('resume.download')}}">Download</a>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <hr>
