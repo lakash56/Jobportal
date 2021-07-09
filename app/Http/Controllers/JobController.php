@@ -133,7 +133,7 @@ class JobController extends Controller
 
 
 
-    public function applicantsToggle($user_id,$job_id)
+    public function applicantsToggle($user_id, $job_id)
     {
         $user = User::findOrFail($user_id);
 
